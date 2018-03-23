@@ -17,7 +17,7 @@ import android.view.SurfaceView;
 
 
 public class PreviewBorderView extends SurfaceView implements SurfaceHolder.Callback, Runnable {
-    private static final String DEFAULT_TIPS_TEXT = "请将身份证照片面置于框内扫描，并尽量对齐边框";
+    private static final String DEFAULT_TIPS_TEXT = "请将身份证对齐边框";
     private static final int DEFAULT_TIPS_TEXT_SIZE = 18;
     private static final int DEFAULT_TIPS_TEXT_COLOR = Color.GREEN;
     private int mScreenH;
@@ -97,10 +97,7 @@ public class PreviewBorderView extends SurfaceView implements SurfaceHolder.Call
         try {
             this.mCanvas = this.mHolder.lockCanvas();
             this.mCanvas.drawARGB(100, 0, 0, 0);
-//            this.mScreenW = (this.mScreenH * 4 / 3);
-            Log.e("TAG", "mScreenW:" + mScreenW + " mScreenH:" + mScreenH);
             this.mCanvas.drawRect(new RectF(this.mScreenW / 2 - this.mScreenH /2, this.mScreenH * 1 / 6, this.mScreenW / 2 + this.mScreenH / 2, this.mScreenH - this.mScreenH * 1 / 6), this.mPaint);
-			//this.mCanvas.drawRect(new RectF(this.mScreenH - this.mScreenW /4,this.mScreenW *3/16- this.mScreenH * 1 / 8, this.mScreenW *5/ 4 - this.mScreenH, this.mScreenH*9/8 - this.mScreenW * 3 / 16), this.mPaint);
 			this.mCanvas.drawLine(this.mScreenW / 2 - this.mScreenH * 2 / 3 + this.mScreenH * 1 / 6, this.mScreenH * 1 / 6, this.mScreenW / 2 - this.mScreenH * 2 / 3 + this.mScreenH * 1 / 6, this.mScreenH * 1 / 6 + 150, this.mPaintLine);
             this.mCanvas.drawLine(this.mScreenW / 2 - this.mScreenH * 2 / 3 + this.mScreenH * 1 / 6, this.mScreenH * 1 / 6, this.mScreenW / 2 - this.mScreenH * 2 / 3 + this.mScreenH * 1 / 6 + 150, this.mScreenH * 1 / 6, this.mPaintLine);
             this.mCanvas.drawLine(this.mScreenW / 2 + this.mScreenH * 2 / 3 - this.mScreenH * 1 / 6, this.mScreenH * 1 / 6, this.mScreenW / 2 + this.mScreenH * 2 / 3 - this.mScreenH * 1 / 6, this.mScreenH * 1 / 6 + 150, this.mPaintLine);
@@ -114,10 +111,6 @@ public class PreviewBorderView extends SurfaceView implements SurfaceHolder.Call
             mPaintLine.setDither(true);
             float length = mPaintLine.measureText(tipText);
             this.mCanvas.drawText(tipText, this.mScreenW / 2 - this.mScreenH * 2 / 3 + this.mScreenH * 1 / 6 + this.mScreenH / 2 - length / 2, this.mScreenH * 1 / 2 - tipTextSize, mPaintLine);
-            Log.e("TAG", "left:" + (this.mScreenW / 2 - this.mScreenH * 2 / 3 + this.mScreenH * 1 / 6));
-            Log.e("TAG", "top:" + (this.mScreenH * 1 / 6));
-            Log.e("TAG", "right:" + (this.mScreenW / 2 + this.mScreenH * 2 / 3 - this.mScreenH * 1 / 6));
-            Log.e("TAG", "bottom:" + (this.mScreenH - this.mScreenH * 1 / 6));
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -47,6 +48,9 @@ public class CameraBackActivity extends BaseCameraActivity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		opentime = System.currentTimeMillis();
+		int flag= WindowManager.LayoutParams.FLAG_FULLSCREEN;
+		//设置当前窗体为全屏显示
+		getWindow().setFlags(flag, flag);
 		setContentView(R.layout.activity_camera);
 		ThisContext=this;
 		x_s=new ArrayList();
@@ -262,12 +266,12 @@ public class CameraBackActivity extends BaseCameraActivity{
 							JsonParser parser = new JsonParser();  //创建JSON解析器
 							JsonObject object = (JsonObject) parser.parse(result);  //创建JsonObject对象
 							int errorCode = object.get("errorcode").getAsInt();
-							String date = object.get("valid_date").getAsString();
-							String location = object.get("authority").getAsString();
+
 							if (errorCode != 0) {
 								Log.d("errorcode为", "" + errorCode);
 							} else {
-
+								String date = object.get("valid_date").getAsString();
+								String location = object.get("authority").getAsString();
 								Intent i = new Intent();
 								i.putExtra("date",
 										date);

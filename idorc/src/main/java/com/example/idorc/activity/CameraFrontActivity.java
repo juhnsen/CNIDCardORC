@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -46,6 +47,9 @@ public class CameraFrontActivity extends BaseCameraActivity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		opentime = System.currentTimeMillis();
+		int flag= WindowManager.LayoutParams.FLAG_FULLSCREEN;
+		//设置当前窗体为全屏显示
+		getWindow().setFlags(flag, flag);
 		setContentView(R.layout.activity_camera);
 		ThisContext=this;
 		tv_lightstate = (TextView) findViewById(R.id.tv_openlight);
@@ -241,17 +245,12 @@ public class CameraFrontActivity extends BaseCameraActivity{
 		rawImage = baos.toByteArray();
 		//将rawImage转换成bitmap
 		bmp= BitMapUtils.transform_Cut(rawImage);
-
 		count++;
-
 		if (bmp == null) {
-			Log.d("zka", "bitmap is nlll");
 			return;
 		} else {
 			if (count>1&&isPhoneMove()<0.1&&isPhoneMove()>-0.1) {
 				String msg = BitMapUtils.bitmapToBase64(bmp);
-				Log.d("······", "正在上传");
-				Log.d("字节长度", "" + msg.length());
 				HttpUtil.uploadIdCard(msg, "0", new HttpUtil.SimpleCallBack() {
 					@Override
 					public void Succ(String result) {
@@ -259,15 +258,15 @@ public class CameraFrontActivity extends BaseCameraActivity{
 						JsonParser parser = new JsonParser();  //创建JSON解析器
 						JsonObject object = (JsonObject) parser.parse(result);  //创建JsonObject对象
 						int errorCode = object.get("errorcode").getAsInt();
-						String name = object.get("name").getAsString();
-						String sex = object.get("sex").getAsString();
-						String nation = object.get("nation").getAsString();
-						String address = object.get("address").getAsString();
-						String id = object.get("id").getAsString();
+
 						if (errorCode != 0) {
 							Log.d("errorcode为", "" + errorCode);
 						} else {
-
+							String name = object.get("name").getAsString();
+							String sex = object.get("sex").getAsString();
+							String nation = object.get("nation").getAsString();
+							String address = object.get("address").getAsString();
+							String id = object.get("id").getAsString();
 							Intent i = new Intent();
 							i.putExtra("id",
 									id);
