@@ -254,8 +254,7 @@ public class CameraBackActivity extends BaseCameraActivity{
 				if (isQuiet==1) {
 					isQuiet=0;
 					String msg = BitMapUtils.bitmapToBase64(bmp);
-					Log.d("······", "正在上传");
-					Log.d("字节长度", "" + msg.length());
+
 					HttpUtil.uploadIdCard(msg, "1", new HttpUtil.SimpleCallBack() {
 						@Override
 						public void Succ(String result) {

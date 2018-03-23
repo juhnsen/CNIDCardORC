@@ -55,20 +55,11 @@
     android:supportsRtl="true"
     >
 
-    <activity android:name=".activity.FrontActivity">
-    </activity>
-
-    <activity
+        <activity
         android:name=".activity.CameraFrontActivity"
         android:screenOrientation="landscape"/>
 
-    <activity android:name=".activity.MainActivity">
-
-    </activity>
-
-    <activity android:name=".activity.BackActivity">
-    </activity>
-    <activity
+        <activity
         android:name=".activity.CameraBackActivity"
         android:screenOrientation="landscape"/>
 </application>
