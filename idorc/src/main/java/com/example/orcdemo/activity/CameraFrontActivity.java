@@ -1,4 +1,4 @@
-package com.example.idorc.activity;
+package com.example.orcdemo.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,10 +19,10 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.idorc.R;
-import com.example.idorc.manager.CameraManager;
-import com.example.idorc.util.BitMapUtils;
-import com.example.idorc.util.HttpUtil;
+import com.example.orcdemo.R;
+import com.example.orcdemo.manager.CameraManager;
+import com.example.orcdemo.util.BitMapUtils;
+import com.example.orcdemo.util.HttpUtil;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -30,19 +30,18 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 
-public class CameraBackActivity extends BaseCameraActivity{
+public class CameraFrontActivity extends BaseCameraActivity{
 
 	private CameraManager cameraManager;
 	private boolean hasSurface;
 	private Button btn_close, light;
 	private boolean toggleLight = false;
-	int isQuiet = 1;
 	private TextView tv_lightstate;
-	private int count=0;
+	int count=0;
 	private Long opentime;
 	Bitmap bmp;
-	Context ThisContext;
 	ArrayList<Float> x_s,y_s,z_s;
+	Context ThisContext;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +52,11 @@ public class CameraBackActivity extends BaseCameraActivity{
 		getWindow().setFlags(flag, flag);
 		setContentView(R.layout.activity_camera);
 		ThisContext=this;
+		tv_lightstate = (TextView) findViewById(R.id.tv_openlight);
 		x_s=new ArrayList();
 		y_s=new ArrayList();
 		z_s=new ArrayList();
-		tv_lightstate = (TextView) findViewById(R.id.tv_openlight);
+
 		initLayoutParams();
 	}
 
@@ -98,13 +98,13 @@ public class CameraBackActivity extends BaseCameraActivity{
 	@Override
 	protected void onResume() {
 		super.onResume();
+
 		/**
 		 * 初始化camera
 		 */
 		cameraManager = new CameraManager();
 		SurfaceView surfaceView = (SurfaceView) findViewById(R.id.surfaceview);
 		SurfaceHolder surfaceHolder = surfaceView.getHolder();
-
 		if (hasSurface) {
 			// activity在paused时但不会stopped,因此surface仍旧存在；
 			// surfaceCreated()不会调用，因此在这里初始化camera
@@ -124,9 +124,7 @@ public class CameraBackActivity extends BaseCameraActivity{
 	}
 
 	@Override
-	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
-	}
+	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {}
 
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
@@ -181,6 +179,7 @@ public class CameraBackActivity extends BaseCameraActivity{
 		super.onBackPressed();
 	}
 
+
 	@Override
 	public void onSensorChanged(SensorEvent sensorEvent) {
 		float[] values = sensorEvent.values;
@@ -202,7 +201,9 @@ public class CameraBackActivity extends BaseCameraActivity{
 		}
 
 
+
 	}
+
 
 	public float isPhoneMove(){
 		float sum=0;
@@ -221,7 +222,6 @@ public class CameraBackActivity extends BaseCameraActivity{
 		return avg;
 	}
 
-
 	@Override
 	public void onAccuracyChanged(Sensor sensor, int i) {
 
@@ -231,7 +231,6 @@ public class CameraBackActivity extends BaseCameraActivity{
 	public void onPreviewFrame(byte[] data, Camera camera) {
 		ByteArrayOutputStream baos;
 		byte[] rawImage;
-
 		Camera.Size previewSize = camera.getParameters().getPreviewSize();//获取尺寸,格式转换的时候要用到
 		BitmapFactory.Options newOpts = new BitmapFactory.Options();
 		newOpts.inJustDecodeBounds = true;
@@ -246,54 +245,58 @@ public class CameraBackActivity extends BaseCameraActivity{
 		rawImage = baos.toByteArray();
 		//将rawImage转换成bitmap
 		bmp= BitMapUtils.transform_Cut(rawImage);
-
 		count++;
-
 		if (bmp == null) {
-			Log.d("zka", "bitmap is nlll");
 			return;
 		} else {
-			if (count>1&&isPhoneMove()<0.15) {
-				Log.d("isQuiet=", ""+isQuiet);
-				if (isQuiet==1) {
-					isQuiet=0;
-					String msg = BitMapUtils.bitmapToBase64(bmp);
+			if (count>1&&isPhoneMove()<0.1&&isPhoneMove()>-0.1) {
+				String msg = BitMapUtils.bitmapToBase64(bmp);
+				HttpUtil.uploadIdCard(msg, "0", new HttpUtil.SimpleCallBack() {
+					@Override
+					public void Succ(String result) {
+						Log.d("00000000000", result);
+						JsonParser parser = new JsonParser();  //创建JSON解析器
+						JsonObject object = (JsonObject) parser.parse(result);  //创建JsonObject对象
+						int errorCode = object.get("errorcode").getAsInt();
 
-					HttpUtil.uploadIdCard(msg, "1", new HttpUtil.SimpleCallBack() {
-						@Override
-						public void Succ(String result) {
-							Log.d("背面", result);
-							JsonParser parser = new JsonParser();  //创建JSON解析器
-							JsonObject object = (JsonObject) parser.parse(result);  //创建JsonObject对象
-							int errorCode = object.get("errorcode").getAsInt();
-
-							if (errorCode != 0) {
-								Log.d("errorcode为", "" + errorCode);
-							} else {
-								String date = object.get("valid_date").getAsString();
-								String location = object.get("authority").getAsString();
-								Intent i = new Intent();
-								i.putExtra("date",
-										date);
-								i.putExtra("location",
-										"" + location);
-								setResult(RESULT_OK, i);
-
-								bmp.recycle();
-								finish();
-							}
+						if (errorCode != 0) {
+							Log.d("errorcode为", "" + errorCode);
+						} else {
+							String name = object.get("name").getAsString();
+							String sex = object.get("sex").getAsString();
+							String nation = object.get("nation").getAsString();
+							String address = object.get("address").getAsString();
+							String id = object.get("id").getAsString();
+							Intent i = new Intent();
+							i.putExtra("id",
+									id);
+							i.putExtra("name",
+									"" + name);
+							i.putExtra("sex",
+									"" + sex);
+							i.putExtra("nation",
+									"" + nation);
+							i.putExtra("address",
+									"" + address);
+							setResult(RESULT_OK, i);
+							bmp.recycle();
+							finish();
 						}
 
-						@Override
-						public void error() {
+					}
 
-						}
-					});
+					@Override
+					public void error() {
 
-				}else { }
-			}else {
-				isQuiet=1;
+					}
+				});
+
+
+
+
 			}
 		}
+
 	}
 }
+

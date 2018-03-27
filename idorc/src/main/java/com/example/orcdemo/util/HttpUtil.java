@@ -1,9 +1,9 @@
-package com.example.idorc.util;
+package com.example.orcdemo.util;
 
 
-import com.example.idorc.intf.Constant;
-import com.example.idorc.intf.PostIntf;
-import com.example.idorc.sign.YoutuSign;
+import com.example.orcdemo.intf.Constant;
+import com.example.orcdemo.intf.PostIntf;
+import com.example.orcdemo.sign.YoutuSign;
 
 import org.json.JSONObject;
 
@@ -21,7 +21,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-import static com.example.idorc.intf.Constant.EXPIRED_SECONDS;
+import static com.example.orcdemo.intf.Constant.EXPIRED_SECONDS;
 
 
 /**

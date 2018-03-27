@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.example.idorc"
+          package="com.example.orcdemo"
           >
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -56,11 +56,11 @@
     >
 
         <activity
-        android:name=".activity.CameraFrontActivity"
+        android:name="com.example.orcdemo.activity.CameraFrontActivity"
         android:screenOrientation="landscape"/>
 
         <activity
-        android:name=".activity.CameraBackActivity"
+        android:name="com.example.orcdemo.activity.CameraBackActivity"
         android:screenOrientation="landscape"/>
 </application>
 </manifest>

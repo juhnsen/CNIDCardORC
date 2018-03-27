@@ -1,4 +1,4 @@
-package com.example.idorc;
+package com.example.orcdemo;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

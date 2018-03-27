@@ -40,5 +40,33 @@ task makeJar(type: Copy) {
     include('classes.jar')
     rename ('classes.jar', 'ID_ORC.jar')
 }
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'CNIDCardORC'
+
+    publishedGroupId = 'com.example.orcdemo'
+
+    libraryName = 'idorc'
+    artifact = 'idorc'
+
+    libraryDescription = 'This library is test for CNIDCardORC'
+
+    siteUrl = 'https://github.com/juhnsen/CNIDCardORC'
+    gitUrl = 'https://github.com/juhnsen/CNIDCardORC.git'
+
+    libraryVersion = '1.0.0'
+
+    developerId = 'timeshell'
+    developerName = 'timeshell'
+    developerEmail = 'timeshell001@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
+
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
 
 makeJar.dependsOn(build)

@@ -1,4 +1,4 @@
-package com.example.idorc.manager;
+package com.example.orcdemo.manager;
 
 import android.hardware.Camera;
 import android.os.AsyncTask;

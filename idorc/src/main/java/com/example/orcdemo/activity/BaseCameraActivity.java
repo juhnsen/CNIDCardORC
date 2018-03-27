@@ -1,4 +1,4 @@
-package com.example.idorc.activity;
+package com.example.orcdemo.activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,7 +11,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.SurfaceHolder;
 
-import com.example.idorc.manager.CameraManager;
+import com.example.orcdemo.manager.CameraManager;
 
 
 /**

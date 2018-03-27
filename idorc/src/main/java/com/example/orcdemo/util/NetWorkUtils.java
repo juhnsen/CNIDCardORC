@@ -1,4 +1,4 @@
-package com.example.idorc.util;
+package com.example.orcdemo.util;
 
 import android.content.Context;
 import android.location.LocationManager;

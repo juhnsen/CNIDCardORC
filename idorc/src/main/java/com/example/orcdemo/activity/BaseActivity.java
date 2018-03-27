@@ -1,4 +1,4 @@
-package com.example.idorc.activity;
+package com.example.orcdemo.activity;
 
 import android.app.Activity;
 import android.content.pm.PackageManager;
@@ -8,8 +8,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 
-import com.example.idorc.intf.PermissionListener;
-import com.example.idorc.util.ActivityCollector;
+import com.example.orcdemo.intf.PermissionListener;
+import com.example.orcdemo.util.ActivityCollector;
 
 import java.util.ArrayList;
 import java.util.List;

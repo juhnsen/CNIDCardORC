@@ -1,4 +1,4 @@
-package com.example.idorc.manager;
+package com.example.orcdemo.manager;
 
 import android.content.Context;
 import android.hardware.Camera;
