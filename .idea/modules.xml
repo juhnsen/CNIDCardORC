@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/CNIDCardORC/idorc.iml" filepath="$PROJECT_DIR$/CNIDCardORC/idorc.iml" />
       <module fileurl="file://$PROJECT_DIR$/MuleTest.iml" filepath="$PROJECT_DIR$/MuleTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/idorc/idorc.iml" filepath="$PROJECT_DIR$/idorc/idorc.iml" />
     </modules>
   </component>
 </project>
