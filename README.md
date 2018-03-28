@@ -6,7 +6,7 @@
 ===
 ```Java
 dependencies {
-    compile 'com.github.juhnsen:CNIDCardORC:v1.0'
+    compile 'com.example.orcdemo:CNIDCardORC:1.0.0'
 }
 ```
 
